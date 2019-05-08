@@ -1,0 +1,50 @@
+"use strict";
+
+var _express = require("express");
+
+var _express2 = _interopRequireDefault(_express);
+
+var _mongoose = require("mongoose");
+
+var _mongoose2 = _interopRequireDefault(_mongoose);
+
+var _api = require("./api");
+
+var _development = require("./config/env/development");
+
+var _globalMiddleware = require("./api/middlewares/global-middleware");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//connect mongoose
+_mongoose2.default.Promise = global.Promise;
+_mongoose2.default.connect("mongodb://localhost/" + _development.devConfig.database);
+var app = (0, _express2.default)();
+var PORT = _development.devConfig.port;
+
+//Register Global Middleware
+(0, _globalMiddleware.setGlobalMiddlewares)(app);
+
+//Error Handling middleware
+app.use('/api', _api.restRouter);
+
+//Error handler 404 status
+app.use(function (req, res, next) {
+  var error = new Error('Not found');
+  error.message = 'Invalid Route';
+  error.status = 404;
+  next(error);
+});
+app.use(function (error, req, res, next) {
+  res.status(error.status || 500);
+  return res.json({
+    error: {
+      message: error.message
+    }
+  });
+});
+
+app.listen(PORT, function () {
+  console.log("Server is running on PORT " + PORT);
+});
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uL3NyYy9hcHAuanMiXSwibmFtZXMiOlsibW9uZ29vc2UiLCJQcm9taXNlIiwiZ2xvYmFsIiwiY29ubmVjdCIsImRldkNvbmZpZyIsImRhdGFiYXNlIiwiYXBwIiwiUE9SVCIsInBvcnQiLCJ1c2UiLCJyZXN0Um91dGVyIiwicmVxIiwicmVzIiwibmV4dCIsImVycm9yIiwiRXJyb3IiLCJtZXNzYWdlIiwic3RhdHVzIiwianNvbiIsImxpc3RlbiIsImNvbnNvbGUiLCJsb2ciXSwibWFwcGluZ3MiOiI7O0FBQUE7Ozs7QUFDQTs7OztBQUNBOztBQUNBOztBQUNBOzs7O0FBRUE7QUFDQUEsbUJBQVNDLE9BQVQsR0FBbUJDLE9BQU9ELE9BQTFCO0FBQ0FELG1CQUFTRyxPQUFULDBCQUF3Q0MsdUJBQVVDLFFBQWxEO0FBQ0EsSUFBTUMsTUFBTSx3QkFBWjtBQUNBLElBQU1DLE9BQU9ILHVCQUFVSSxJQUF2Qjs7QUFFQTtBQUNBLDRDQUFxQkYsR0FBckI7O0FBRUE7QUFDQUEsSUFBSUcsR0FBSixDQUFRLE1BQVIsRUFBZ0JDLGVBQWhCOztBQUVBO0FBQ0FKLElBQUlHLEdBQUosQ0FBUSxVQUFDRSxHQUFELEVBQU1DLEdBQU4sRUFBV0MsSUFBWCxFQUFvQjtBQUMxQixNQUFNQyxRQUFRLElBQUlDLEtBQUosQ0FBVSxXQUFWLENBQWQ7QUFDQUQsUUFBTUUsT0FBTixHQUFnQixlQUFoQjtBQUNBRixRQUFNRyxNQUFOLEdBQWUsR0FBZjtBQUNBSixPQUFLQyxLQUFMO0FBQ0QsQ0FMRDtBQU1BUixJQUFJRyxHQUFKLENBQVEsVUFBQ0ssS0FBRCxFQUFRSCxHQUFSLEVBQWFDLEdBQWIsRUFBa0JDLElBQWxCLEVBQTJCO0FBQ2pDRCxNQUFJSyxNQUFKLENBQVdILE1BQU1HLE1BQU4sSUFBZ0IsR0FBM0I7QUFDQSxTQUFPTCxJQUFJTSxJQUFKLENBQVM7QUFDZEosV0FBTztBQUNMRSxlQUFTRixNQUFNRTtBQURWO0FBRE8sR0FBVCxDQUFQO0FBS0QsQ0FQRDs7QUFTQVYsSUFBSWEsTUFBSixDQUFXWixJQUFYLEVBQWlCLFlBQU07QUFDckJhLFVBQVFDLEdBQVIsZ0NBQXlDZCxJQUF6QztBQUNELENBRkQiLCJmaWxlIjoiYXBwLmpzIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IGV4cHJlc3MgZnJvbSBcImV4cHJlc3NcIjtcclxuaW1wb3J0IG1vbmdvb3NlIGZyb20gXCJtb25nb29zZVwiO1xyXG5pbXBvcnQgeyByZXN0Um91dGVyIH0gZnJvbSBcIi4vYXBpXCI7XHJcbmltcG9ydCB7IGRldkNvbmZpZyB9IGZyb20gXCIuL2NvbmZpZy9lbnYvZGV2ZWxvcG1lbnRcIjtcclxuaW1wb3J0IHsgc2V0R2xvYmFsTWlkZGxld2FyZXMgfSBmcm9tIFwiLi9hcGkvbWlkZGxld2FyZXMvZ2xvYmFsLW1pZGRsZXdhcmVcIjtcclxuXHJcbi8vY29ubmVjdCBtb25nb29zZVxyXG5tb25nb29zZS5Qcm9taXNlID0gZ2xvYmFsLlByb21pc2U7XHJcbm1vbmdvb3NlLmNvbm5lY3QoYG1vbmdvZGI6Ly9sb2NhbGhvc3QvJHtkZXZDb25maWcuZGF0YWJhc2V9YClcclxuY29uc3QgYXBwID0gZXhwcmVzcygpO1xyXG5jb25zdCBQT1JUID0gZGV2Q29uZmlnLnBvcnQ7XHJcblxyXG4vL1JlZ2lzdGVyIEdsb2JhbCBNaWRkbGV3YXJlXHJcbnNldEdsb2JhbE1pZGRsZXdhcmVzKGFwcCk7XHJcblxyXG4vL0Vycm9yIEhhbmRsaW5nIG1pZGRsZXdhcmVcclxuYXBwLnVzZSgnL2FwaScsIHJlc3RSb3V0ZXIpO1xyXG5cclxuLy9FcnJvciBoYW5kbGVyIDQwNCBzdGF0dXNcclxuYXBwLnVzZSgocmVxLCByZXMsIG5leHQpID0+IHtcclxuICBjb25zdCBlcnJvciA9IG5ldyBFcnJvcignTm90IGZvdW5kJyk7XHJcbiAgZXJyb3IubWVzc2FnZSA9ICdJbnZhbGlkIFJvdXRlJztcclxuICBlcnJvci5zdGF0dXMgPSA0MDQ7XHJcbiAgbmV4dChlcnJvcik7XHJcbn0pO1xyXG5hcHAudXNlKChlcnJvciwgcmVxLCByZXMsIG5leHQpID0+IHtcclxuICByZXMuc3RhdHVzKGVycm9yLnN0YXR1cyB8fCA1MDApO1xyXG4gIHJldHVybiByZXMuanNvbih7XHJcbiAgICBlcnJvcjoge1xyXG4gICAgICBtZXNzYWdlOiBlcnJvci5tZXNzYWdlXHJcbiAgICB9LFxyXG4gIH0pO1xyXG59KTtcclxuXHJcbmFwcC5saXN0ZW4oUE9SVCwgKCkgPT4ge1xyXG4gIGNvbnNvbGUubG9nKGBTZXJ2ZXIgaXMgcnVubmluZyBvbiBQT1JUICR7UE9SVH1gKTtcclxufSk7XHJcbiJdfQ==

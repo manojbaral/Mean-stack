@@ -1,0 +1,22 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.invoiceRouter = undefined;
+
+var _express = require('express');
+
+var _express2 = _interopRequireDefault(_express);
+
+var _invoice = require('./invoice.controller');
+
+var _invoice2 = _interopRequireDefault(_invoice);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var invoiceRouter = exports.invoiceRouter = _express2.default.Router();
+invoiceRouter.route('/').post(_invoice2.default.create).get(_invoice2.default.findAll);
+
+invoiceRouter.route('/:id').put(_invoice2.default.update).delete(_invoice2.default.delete).get(_invoice2.default.findOne);
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL3NyYy9hcGkvcmVzb3VyY2VzL2ludm9pY2UvaW52b2ljZS5yb3V0ZXIuanMiXSwibmFtZXMiOlsiaW52b2ljZVJvdXRlciIsImV4cHJlc3MiLCJSb3V0ZXIiLCJyb3V0ZSIsInBvc3QiLCJpbnZvaWNlQ29udHJvbGxlciIsImNyZWF0ZSIsImdldCIsImZpbmRBbGwiLCJwdXQiLCJ1cGRhdGUiLCJkZWxldGUiLCJmaW5kT25lIl0sIm1hcHBpbmdzIjoiOzs7Ozs7O0FBQUE7Ozs7QUFDQTs7Ozs7O0FBRU8sSUFBTUEsd0NBQWdCQyxrQkFBUUMsTUFBUixFQUF0QjtBQUNQRixjQUFjRyxLQUFkLENBQW9CLEdBQXBCLEVBQ0dDLElBREgsQ0FDUUMsa0JBQWtCQyxNQUQxQixFQUVHQyxHQUZILENBRU9GLGtCQUFrQkcsT0FGekI7O0FBSUFSLGNBQWNHLEtBQWQsQ0FBb0IsTUFBcEIsRUFDR00sR0FESCxDQUNPSixrQkFBa0JLLE1BRHpCLEVBRUdDLE1BRkgsQ0FFVU4sa0JBQWtCTSxNQUY1QixFQUdHSixHQUhILENBR09GLGtCQUFrQk8sT0FIekIiLCJmaWxlIjoiaW52b2ljZS5yb3V0ZXIuanMiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgZXhwcmVzcyBmcm9tICdleHByZXNzJztcclxuaW1wb3J0IGludm9pY2VDb250cm9sbGVyIGZyb20gJy4vaW52b2ljZS5jb250cm9sbGVyJztcclxuXHJcbmV4cG9ydCBjb25zdCBpbnZvaWNlUm91dGVyID0gZXhwcmVzcy5Sb3V0ZXIoKTtcclxuaW52b2ljZVJvdXRlci5yb3V0ZSgnLycpXHJcbiAgLnBvc3QoaW52b2ljZUNvbnRyb2xsZXIuY3JlYXRlKVxyXG4gIC5nZXQoaW52b2ljZUNvbnRyb2xsZXIuZmluZEFsbCk7XHJcblxyXG5pbnZvaWNlUm91dGVyLnJvdXRlKCcvOmlkJylcclxuICAucHV0KGludm9pY2VDb250cm9sbGVyLnVwZGF0ZSlcclxuICAuZGVsZXRlKGludm9pY2VDb250cm9sbGVyLmRlbGV0ZSlcclxuICAuZ2V0KGludm9pY2VDb250cm9sbGVyLmZpbmRPbmUpOyJdfQ==
